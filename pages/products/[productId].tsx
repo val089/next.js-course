@@ -28,6 +28,7 @@ const ProductId = ({
   return (
     <div>
       <Link href="/">Wróć</Link>
+      <h1>PRODUKTY</h1>
       <ProductDetails
         data={{
           id: data.id,
