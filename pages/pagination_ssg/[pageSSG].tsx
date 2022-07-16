@@ -69,9 +69,7 @@ export const getStaticProps = async ({
   }
 
   const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products?take=25&offset=${
-      params.pageSSG * 25
-    }`
+    `https://naszsklep-api.vercel.app/api/products?take=25&offset=${params.pageSSG}`
   );
   const data: StoreApiResponse[] = await res.json();
 
