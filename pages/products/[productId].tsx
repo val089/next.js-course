@@ -28,6 +28,7 @@ const ProductId = ({
   return (
     <div>
       <Link href="/">Wróć</Link>
+      <h1>PRODUKTY</h1>
       <ProductDetails
         data={{
           id: data.id,
@@ -35,6 +36,7 @@ const ProductId = ({
           thumbnailUrl: data.image,
           thumbnailAlt: data.title,
           description: data.description,
+          longDescription: data.longDescription,
           rating: data.rating.rate,
         }}
       />
@@ -49,7 +51,7 @@ export default ProductId;
 export const getStaticPaths = async () => {
   // ograniczamy liczbę ścieżek za pomocą tej metody, żeby serwer nie generował ich nieskończenie wiele
 
-  const res = await fetch(`https://fakestoreapi.com/products/`);
+  const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
   const data: StoreApiResponse[] = await res.json();
   return {
     paths: data.map((product) => {
@@ -76,7 +78,7 @@ export const getStaticProps = async ({
 
   //params może być undefined, więc sprawdzamy czy istnieje
   const res = await fetch(
-    `https://fakestoreapi.com/products/${params.productId}`
+    `https://naszsklep-api.vercel.app/api/products/${params.productId}`
   );
   const data: StoreApiResponse | null = await res.json(); //faker może zwrócić też null
 
