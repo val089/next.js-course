@@ -31,7 +31,7 @@ const ProductsPage = ({
 
 // Gdy np. API zostanie zmienione to zmienione dane nie pojawią się na stronie dopóki nie zrobimy builda aplikacj
 export const getStaticProps = async () => {
-  const res = await fetch(`https://fakestoreapi.com/products/`);
+  const res = await fetch(`https://naszsklep-api.vercel.app/api/products/`);
   //można użyć typu unknown zamiast any
   const data: StoreApiResponse[] = await res.json(); //dane chcemy w formacie json
 
@@ -55,6 +55,7 @@ export interface StoreApiResponse {
   category: Category;
   image: string;
   rating: Rating;
+  longDescription: string;
 }
 
 export type Category =

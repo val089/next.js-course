@@ -1,12 +1,10 @@
-import { Footer } from '../components/Footer';
-import { Header } from '../components/Header';
+import { Layout } from '../components/Layout';
 import Image from 'next/image';
 
 //usunęliśmy starą strukturę
 const Home = () => {
   return (
-    <div className="flex flex-col bg-teal-100 min-h-screen">
-      <Header />
+    <Layout>
       <main className="flex-grow max-w-2xl mx-auto grid p-6 sm:grid-cols-2 gap-6">
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
           <Image
@@ -28,8 +26,7 @@ const Home = () => {
           Aldus PageMaker
         </p>
       </main>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
