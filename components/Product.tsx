@@ -1,7 +1,11 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
 import { NextSeo } from 'next-seo';
+import { MarkdownResult } from '../types';
+import ReactMarkdown from 'react-markdown';
+import { NextMarkdown } from './NextMarkdown';
+import Link from 'next/link';
+
+//ReactMarkdown pobieramy po stronie klienta narazie, zmienimy to na pobieranie po stronie serwera, ponieważ paczka waży około 45kb
 
 interface ProductDetails {
   id: number;
@@ -10,7 +14,7 @@ interface ProductDetails {
   thumbnailAlt: string;
   description: string;
   rating: number;
-  longDescription: string;
+  longDescription: MarkdownResult;
 }
 
 type ProductListItem = Pick<
@@ -54,6 +58,25 @@ export const ProductListItem = ({ data }: ProductListItemProps) => (
         <h2 className="p-4 text-2xl font-bold">{data.title}</h2>
       </a>
     </Link>
+    {/* dodajemy component żeby użyć Linku, aby przejściu nie przeładowywać strony */}
+    <ReactMarkdown
+      components={{
+        // nadpisujemy tag a swoim własnym komponentem, który zwracany jest z funkcji
+        a: ({ href, ...props }) => {
+          //atrybut href jest opcjonalny więc musimy go obsłużyć, bo może być undefined
+          if (!href) {
+            return <a {...props}></a>;
+          }
+          return (
+            <Link href={href}>
+              <a {...props}></a>
+            </Link>
+          );
+        },
+      }}
+    >
+      {`[link do produktu numer ${data.id}](/products/${data.id})`}
+    </ReactMarkdown>
   </>
 );
 
@@ -64,14 +87,14 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => (
       className="bg-white p-4"
     >
       <NextSeo
-        title={data.title}
-        description={data.description}
+        // title={data.title}
+        // description={data.description}
         canonical={`https://naszsklep.vercel.app/products/${data.id}`}
         //caconical - unikalny link do danej podstrony, informujemy googla o tym
         openGraph={{
           url: `https://naszsklep.vercel.app/products/${data.id}`,
-          title: data.title,
-          description: data.description,
+          // title: data.title,
+          // description: data.description,
           images: [
             {
               url: data.thumbnailUrl,
@@ -79,7 +102,7 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => (
               type: 'image/jpeg',
             },
           ],
-          site_name: 'Nasz Sklep',
+          // site_name: 'Nasz Sklep',
         }}
       />
       <Image
@@ -93,7 +116,9 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => (
       <h2 className="p-4 text-2xl font-bold">{data.title}</h2>
       <p>{data.description}</p>
       <article className="prose lg:prose-xl">
-        <ReactMarkdown>{data.longDescription}</ReactMarkdown>
+        {/* <ReactMarkdown>{data.longDescription}</ReactMarkdown> */}
+        {/* <MDXRemote {...data.longDescription} /> */}
+        <NextMarkdown description={data.longDescription} />
       </article>
       <Rating rating={data.rating} />
     </div>
