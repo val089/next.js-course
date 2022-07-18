@@ -3,6 +3,7 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next';
+import { serialize } from 'next-mdx-remote/serialize';
 // import { useRouter } from 'next/router';
 import { StoreApiResponse } from '../products';
 import { ProductDetails } from '../../components/Product';
@@ -84,10 +85,21 @@ export const getStaticProps = async ({
 
   const inneData = {};
 
+  if (!data) {
+    return {
+      props: {},
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       inneData,
-      data,
+      data: {
+        ...data,
+        //nadpisujemy pole z data
+        longDescription: await serialize(data.longDescription), // pobieramy Markdown po stronie serwera
+      },
     },
   };
 };
