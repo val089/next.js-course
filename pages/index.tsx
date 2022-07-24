@@ -1,10 +1,9 @@
-import { Layout } from '../components/Layout';
 import Image from 'next/image';
 
 //usunęliśmy starą strukturę
 const Home = () => {
   return (
-    <Layout>
+    <>
       <main className="flex-grow max-w-2xl mx-auto grid p-6 sm:grid-cols-2 gap-6">
         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
           <Image
@@ -26,7 +25,7 @@ const Home = () => {
           Aldus PageMaker
         </p>
       </main>
-    </Layout>
+    </>
   );
 };
 
