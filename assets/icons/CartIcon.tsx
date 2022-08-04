@@ -16,7 +16,7 @@ export const CartIcon = ({
     viewBox="0 0 24 24"
     stroke={color}
     strokeWidth={2}
-    ariaL-label="Usuń element"
+    aria-label="Usuń element"
     {...restProps}
   >
     <path

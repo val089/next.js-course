@@ -1,7 +1,32 @@
 import Image from 'next/image';
+import { useQuery, gql } from '@apollo/client';
+
+const getProductsQuery = gql`
+  query getProductsList {
+    products {
+      id
+      name
+      price
+      slug
+    }
+  }
+`;
 
 //usunęliśmy starą strukturę
 const Home = () => {
+  //w getStaticProps nie możemy wykorzystać hooka
+  const { loading, error, data } = useQuery(getProductsQuery);
+
+  if (loading) {
+    return <p>loading</p>;
+  }
+
+  if (error) {
+    return <p>{JSON.stringify(error)}</p>;
+  }
+
+  console.log(data);
+
   return (
     <>
       <main className="flex-grow max-w-2xl mx-auto grid p-6 sm:grid-cols-2 gap-6">

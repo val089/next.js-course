@@ -10,7 +10,7 @@ import { useCartState } from '../context/CartContext';
 //ReactMarkdown pobieramy po stronie klienta narazie, zmienimy to na pobieranie po stronie serwera, ponieważ paczka waży około 45kb
 
 interface ProductDetails {
-  id: number;
+  id: string;
   title: string;
   thumbnailUrl: string;
   thumbnailAlt: string;
