@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useQuery, gql } from '@apollo/client';
+import { useCreateProductReviewMutation } from '../generated/graphql';
 
 const getProductsQuery = gql`
   query getProductsList {
@@ -14,8 +15,11 @@ const getProductsQuery = gql`
 
 //usunęliśmy starą strukturę
 const Home = () => {
+  const [createReview, { data, loading, error }] =
+    useCreateProductReviewMutation();
+
   //w getStaticProps nie możemy wykorzystać hooka
-  const { loading, error, data } = useQuery(getProductsQuery);
+  // const { loading, error, data } = useQuery(getProductsQuery);
 
   if (loading) {
     return <p>loading</p>;
@@ -26,6 +30,19 @@ const Home = () => {
   }
 
   console.log(data);
+
+  const addReview = async () => {
+    const data = await createReview({
+      variables: {
+        review: {
+          headline: 'test111',
+          name: 'test111',
+          email: 'test111@wp.pl',
+          content: 'xxxxxxxxxxxxxxxxxxxxxx',
+        },
+      },
+    });
+  };
 
   return (
     <>
@@ -49,6 +66,11 @@ const Home = () => {
           przeznaczonym do realizacji druków na komputerach osobistych, jak
           Aldus PageMaker
         </p>
+
+        <button onClick={addReview} type="button">
+          Dodaj komentarz
+        </button>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
       </main>
     </>
   );
