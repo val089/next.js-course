@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next';
-import { StoreApiResponse } from '../products';
+import { StoreApiResponse } from '../pagination/[page]';
 import Link from 'next/link';
 
 export type InferGetStaticPaths<T> = T extends () => Promise<{

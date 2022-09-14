@@ -4,13 +4,14 @@ import { MarkdownResult } from '../types';
 import ReactMarkdown from 'react-markdown';
 import { NextMarkdown } from './NextMarkdown';
 import Link from 'next/link';
-import { useContext } from 'react';
 import { useCartState } from '../context/CartContext';
+import { ProductReviewContainer } from './ProductReview/ProductReviewContainer';
 
 //ReactMarkdown pobieramy po stronie klienta narazie, zmienimy to na pobieranie po stronie serwera, ponieważ paczka waży około 45kb
 
 interface ProductDetails {
   id: string;
+  slug: string;
   title: string;
   thumbnailUrl: string;
   thumbnailAlt: string;
@@ -168,6 +169,7 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => (
         <NextMarkdown description={data.longDescription} />
       </article>
       <Rating rating={data.rating} />
+      <ProductReviewContainer productSlug={data.slug} />
     </div>
   </>
 );

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useQuery, gql } from '@apollo/client';
 import { useCreateProductReviewMutation } from '../generated/graphql';
+import { NewsletterForm } from '../components/NewsletterForm';
 
 const getProductsQuery = gql`
   query getProductsList {
@@ -66,7 +67,7 @@ const Home = () => {
           przeznaczonym do realizacji druków na komputerach osobistych, jak
           Aldus PageMaker
         </p>
-
+        <NewsletterForm />
         <button onClick={addReview} type="button">
           Dodaj komentarz
         </button>
