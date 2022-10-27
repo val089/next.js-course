@@ -42,3 +42,15 @@ query GetReviewsForProductSlug($slug: String!) {
     }
   }
 }
+
+query GetProductBySlug($slug: String!) {
+  product(where: { slug: $slug }) {
+    id
+    slug
+    price
+    name
+    images {
+      url
+    }
+  }
+}
