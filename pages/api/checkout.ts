@@ -3,7 +3,7 @@ import { Stripe } from 'stripe';
 import {
   GetProductBySlugQuery,
   GetProductBySlugQueryVariables,
-  GetProductsSlugDocument,
+  GetProductBySlugDocument,
 } from '../../generated/graphql';
 import { apolloClient } from '../../graphql/apolloClient';
 
@@ -22,11 +22,12 @@ const checkoutHandler: NextApiHandler = async (req, res) => {
 
   const products = await Promise.all(
     body.map(async (cartItem) => {
+      console.log(cartItem);
       const product = await apolloClient.query<
         GetProductBySlugQuery,
         GetProductBySlugQueryVariables
       >({
-        query: GetProductsSlugDocument,
+        query: GetProductBySlugDocument,
         variables: {
           slug: cartItem.slug,
         },
@@ -37,9 +38,7 @@ const checkoutHandler: NextApiHandler = async (req, res) => {
         count: cartItem.count,
       };
     })
-  );
-
-  console.log(products[0].product.data.product?.price);
+  ).catch((err) => console.log('ERROR'));
 
   const stripe = new Stripe(stripeKey, { apiVersion: '2022-08-01' });
 

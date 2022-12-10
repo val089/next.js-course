@@ -26,7 +26,7 @@ const CartPage = () => {
         //     currency: 'PLN',
         //     unit_amount: item.price * 100,
         //     product_data: {
-        //       name: item.title, 
+        //       name: item.title,
         //     },
         //   },
         //   quantity: item.quantity,

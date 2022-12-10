@@ -118,7 +118,7 @@ export const ProductListItem = ({ data }: ProductListItemProps) => {
             id: data.id,
             price: 10,
             title: data.title,
-            quantity: 0,
+            quantity: 1,
           })
         }
       >
